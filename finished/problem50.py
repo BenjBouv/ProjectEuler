@@ -56,35 +56,49 @@ def naive():
 # The program prints a line, containing the sum then the length, each time we find a better solution
 # The solution to the problem is hence the last written sum
 
-maxL = 0
-maxP = 0
+def fromPrimes():
+    maxL = 0
+    maxP = 0
 
-"""
-limit = 0
-for p in primes:
-    limit += 1
-    if p == 953:
-        break
-"""
-
-limit = len(primes)
-for p in range(limit):
-    aim = primes[p]
-    i = init = 0
-    while init < limit:
-        sum = 0
-        init = i
-        while i < limit and sum < aim:
-            sum += primes[i]
-            i += 1
-        if sum == aim:
-            if i - init > maxL:
-                maxL = i - init
-                maxP = aim
-                print aim, maxL
+    """
+    limit = 0
+    for p in primes:
+        limit += 1
+        if p == 953:
             break
-        i = init+1
+    """
+
+    limit = len(primes)
+    for p in range(limit):
+        aim = primes[p]
+        i = init = 0
+        while init < limit:
+            sum = 0
+            init = i
+            while i < limit and sum < aim:
+                sum += primes[i]
+                i += 1
+            if sum == aim:
+                if i - init > maxL:
+                    maxL = i - init
+                    maxP = aim
+                    print aim, maxL
+                break
+            i = init+1
 
 
-
+# Clever solution:
+# We search for the greatest chain lengths first and stop as soon as we find a prime sum.
+min = 21    # there is at least a solution with a chain of length 21
+max = 545   # sum of the first 546 primes > LIMIT
+for i in range(max-min+1):
+    searchedL = max - i
+    for j in range(len(primes) - searchedL):
+        s = sum( primes[j:j+searchedL] )
+        if s > LIMIT:
+            continue
+        if s in primes:
+            print s
+            import sys
+            sys.exit(0)
 
