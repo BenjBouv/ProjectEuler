@@ -8,6 +8,7 @@ from math import sqrt, ceil
 namePrimesFile = "primes.txt"
 
 primes = [2, 3]
+primes_map = {}
 limit_processed = 3
 n1 = -1
 n2 = +1
@@ -40,7 +41,13 @@ def seek_primes(attempts):
         limit_processed = n2
 
 def primes_until( limit ):
+    global primes_map
     seek_primes( 1 + limit / 6 )
+    for p in primes:
+        primes_map[ p ] = True
+
+def is_prime( n ):
+    return primes_map.get( n, None ) != None
 
 def save():
     file = open(namePrimesFile, "w+")
