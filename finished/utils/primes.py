@@ -52,5 +52,26 @@ def is_prime( n ):
 def save():
     file = open(namePrimesFile, "w+")
     for p in primes:
-        file.write("%s " % p)
+        file.write("%s\n" % p)
     file.close()
+
+def load():
+    primes = []
+    file = open(namePrimesFile, "r")
+    for l in f:
+        primes.append( int( l.strip() ) )
+        primes_map[ p ] = True
+    f.close()
+
+def main():
+    """When used as the primary program, computes prime numbers until the program is stopped by Ctrl+C"""
+    try:
+        while True:
+            seek_primes( 5000 )
+            print primes[ len(primes)-1 ]
+    except KeyboardInterrupt:
+        print "Ctrl C caught, gonna save the primes in the file..."
+        save()
+
+if __name__ == "__main__":
+    main()
